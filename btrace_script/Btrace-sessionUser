@@ -1,0 +1,23 @@
+/* BTrace Script Template */
+import com.sun.btrace.annotations.*;
+import static com.sun.btrace.BTraceUtils.*;
+
+@BTrace
+public class TracingScript {
+	/* put your code here */
+
+    @OnMethod(clazz = "org.springframework.web.filter.DelegatingFilterProxy", method = "doFilter")
+    public static void on_doFilter() {
+        println("DelegatingFilterProxy doFilter start");
+    }
+
+    @OnMethod(clazz = "org.springframework.web.filter.DelegatingFilterProxy", method = "invokeDelegate", location = @Location(Kind.RETURN))
+    public static void on_invokeDelegate_end() {
+        println("invokeDelegate method end!");
+    }
+
+    @OnMethod(clazz = "com.ybs.exam.web.servlet.base.BaseServlet", method = "saveSessionUser", location = @Location(Kind.RETURN))
+    public static void on_saveSessionUser_end() {
+        println("saveSessionUser!");
+    }
+}
