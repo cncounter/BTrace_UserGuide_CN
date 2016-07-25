@@ -23,47 +23,49 @@ BTrace 项目源码: [https://github.com/btraceio/btrace](https://github.com/btr
 
 #####  ver. 1.2 (20101020) 
 
-#####  看看。20101020(1.2)
+#####  
 
 
 **BTrace** is a safe, dynamic tracing tool for Java. BTrace works by dynamically (bytecode) instrumenting classes of a running Java program. BTrace inserts tracing actions into the classes of a running Java program and hotswaps the traced program classes. 
 
-* * BTrace * *是一个安全的,Java的动态跟踪工具。BTrace通过动态运行Java程序的字节码插装的课程.BTrace插入跟踪操作运行的Java程序的类和导致hotswap追踪程序类。
+**BTrace** 是一款针对Java的动态跟踪工具,安全又可靠。BTrace可以对已经启动的Java程序通过字节码插装类来动态执行. BTrace对运行程序的Java类插入跟踪操作代码并对相应的类进行热替换(hotswap)。
 
 
-##  BTrace Terminology 
 
 ##  BTrace术语
 
 
-**Probe Point**
 
-Probe项目* * * *
+**探测点(Probe Point)**
 
 
 "location" or "event" at which a set of tracing statements are executed. Probe point is "place" or "event" of interest where we want to execute some tracing statements. 
 
-“位置”或“事件”的一组执行跟踪语句。探测点感兴趣的是“地方”或“事件”,我们想要执行一些跟踪语句。
+是一个“位置(location)”或“事件(event)”, 在探测点可以执行相应的跟踪代码。探测点是我们想要执行某些跟踪代码的地“地方(place)”或“事件(event)”。
 
 
-**Trace Actions or Actions**
 
-* * * *追踪行动黄金股票
 
+**跟踪动作/动作(Trace Actions or Actions)**
 
 Trace statements that are executed whenever a probe "fires".
 
-跟踪语句执行时探测器“火灾”。
+在某个探测点“触发(fires)”时执行的跟踪语句。
 
 
-**Action Methods**
 
-工作方法* * * *
+**处理方法 (Action Methods)**
 
 
 BTrace trace statements that are executed when a probe fires are defined inside a static method a class. Such methods are called "action" methods. 
 
-BTrace跟踪语句执行探测火灾时在静态方法中定义的一个类。这种方法被称为“行动”的方法。
+BTrace跟踪代码需要放在 class 的一个静态方法(static method)中, 在某个探测点“触发(fires)”时执行 。这种静态方法被称为“处理”方法 (Action Methods)。
+
+
+
+
+
+
 
 
 ##  BTrace Program Structure 
@@ -96,72 +98,72 @@ To guarantee that the tracing actions are "read-only" (i.e., the trace actions d
 
 *   can **not** create new objects.
 
-* * *不* *可以创建新对象。
+*   * *不* *可以创建新对象。
 
 
 *   can **not** create new arrays.
 
-* * *不* *创建新的数组。
+*   * *不* *创建新的数组。
 
 
 *   can **not** throw exceptions.
 
-* * *不* *抛出异常。
+*   * *不* *抛出异常。
 
 
 *   can **not** catch exceptions.
 
-* * * * * can七列有例外情况。
+*   * * * * can七列有例外情况。
 
 
 *   can **not** make arbitrary instance or static method calls - only the public static methods of com.sun.btrace.BTraceUtils class  or methods declared in the same program may be called from a BTrace program.
 
-* * *不* *可以任意实例或静态方法调用,只有com.sun.btrace公共静态方法.BTraceUtils同一个程序中声明的类或方法可能从BTrace程序调用。
+*   * *不* *可以任意实例或静态方法调用,只有com.sun.btrace公共静态方法.BTraceUtils同一个程序中声明的类或方法可能从BTrace程序调用。
 
 
 *   **(pre 1.2)** can **not** have instance fields and methods. Only static public void returning methods are allowed for a BTrace class. And all fields have to be static.
 
-* * *(1.2前)* * * *不* *可以有实例字段和方法。只允许静态公共void返回方法的BTrace类。和所有字段必须是静态的。
+*   * *(1.2前)* * * *不* *可以有实例字段和方法。只允许静态公共void返回方法的BTrace类。和所有字段必须是静态的。
 
 
 *   can **not** assign to static or instance fields of target program's classes and objects. But, BTrace class can assign to it's own static fields ("trace state" can be mutated).
 
-* * *不* *分配目标程序静态或实例字段的类和对象。但是,BTrace类可以分配给它的静态字段(“跟踪状态”可以突变)。
+*   * *不* *分配目标程序静态或实例字段的类和对象。但是,BTrace类可以分配给它的静态字段(“跟踪状态”可以突变)。
 
 
 *   can **not** have outer, inner, nested or local classes.
 
-* * *不* *外,内在的、嵌套的或当地的类。
+*   * *不* *外,内在的、嵌套的或当地的类。
 
 
 *   can **not** have synchronized blocks or synchronized methods.
 
-* * *不* * synchronized块或同步方法。
+*   * *不* * synchronized块或同步方法。
 
 
 *   can **not** have loops (for, while, do..while)
 
-* * *不* *可以循环(虽然,做. .)
+*   * *不* *可以循环(虽然,做. .)
 
 
 *   can **not** extend arbitrary class (super class has to be java.lang.Object)
 
-* * *不* *扩展任意类(超类是java . lang . object)
+*   * *不* *扩展任意类(超类是java . lang . object)
 
 
 *   can **not** implement interfaces.
 
-* * * * * can非为接口。
+*   * * * * can非为接口。
 
 
 *   can **not** contains assert statements.
 
-* * *不* *包含断言语句。
+*   * *不* *包含断言语句。
 
 
 *   can **not** use class literals. 
 
-* * *不* *可以使用类的文字。
+*   * *不* *可以使用类的文字。
 
 
 These restrictions could be circumvented by running BTrace in *unsafe* mode. Both the tracing script and the engine must be set up to require *unsafe* mode. The script must be annotated by *@BTrace(unsafe = true)* annotation and the engine must be started in *unsafe* mode. 
@@ -235,20 +237,20 @@ println(味精);
 
 1.  Find the process id of the target Java process that you want to trace. You can use jps tool to find the pid.
 
-1. 找到目标Java进程的进程id,您想要跟踪。您可以使用jps工具找到pid。
+2.  找到目标Java进程的进程id,您想要跟踪。您可以使用jps工具找到pid。
 
 
 
-2.  Write a BTrace program - you may want to start modifying one of the samples.
+1.  Write a BTrace program - you may want to start modifying one of the samples.
 
-2. 写一个BTrace程序,你可能想要开始修改的一个样本。
+2.  写一个BTrace程序,你可能想要开始修改的一个样本。
 
 
 
-3.  Run btrace tool by the following command line: 
+1.  Run btrace tool by the following command line: 
 ```
     btrace <pid> <btrace-script>
-    ```
+```
 
 3所示。通过下面的命令行运行btrace工具:
 ' ' '
@@ -282,27 +284,27 @@ where
 
 *   _include-path_ is a set of include directories that are searched for header files. BTrace includes a simple preprocess with support for #define, #include and conditional compilation. It is **not** like a complete C/C++ preprocessor - but a useful subset. See the sample "ThreadBean.java". If -I is not specified, BTrace skips the preprocessor invocation step.
 
-* _include-path_是一组包括寻找头文件的目录。BTrace包含一个简单的预处理,支持# define,# include和条件编译.这是* * * *不像一个完整的C / c++预处理器,但是一个有用的子集。看过样品“ThreadBean.java”。如果没有指定- i,BTrace跳过预处理程序调用步骤。
+*   _include-path_是一组包括寻找头文件的目录。BTrace包含一个简单的预处理,支持# define,# include和条件编译.这是* * * *不像一个完整的C / c++预处理器,但是一个有用的子集。看过样品“ThreadBean.java”。如果没有指定- i,BTrace跳过预处理程序调用步骤。
 
 
 *   _port_ is the port in which BTrace agent listens. This is optional argument.
 
-* _port_ BTrace代理侦听的端口。这是可选的参数。
+*   _port_ BTrace代理侦听的端口。这是可选的参数。
 
 
 *   _classpath_ is set of directories, jar files where BTrace searches for classes during compilation. Default is ".".
 
-* _classpath_设置的目录,在编译jar文件在BTrace搜索类。默认是“。”。
+*   _classpath_设置的目录,在编译jar文件在BTrace搜索类。默认是“。”。
 
 
 *   _pid_ is the process id of the traced Java program
 
-* _pid_跟踪Java程序的进程id
+*   _pid_跟踪Java程序的进程id
 
 
 *   _btrace-script_ is the trace program. If it is a ".java", then it is compiled before submission. Or else, it is assumed to be pre-compiled [i.e., it has to be a .class] and submitted. 
 
-* _btrace-script_跟踪程序。如果它是一个”。java”,那么编译之前提交。否则,它被认为是预编译(即。,它必须是一个。类)和提交。
+*   _btrace-script_跟踪程序。如果它是一个”。java”,那么编译之前提交。否则,它被认为是预编译(即。,它必须是一个。类)和提交。
 
 
 ###  optional 
@@ -312,17 +314,17 @@ where
 
 *   _port_ is the server socket port at which BTrace agent listens for clients. Default is 2020.
 
-* _port_ BTrace代理的服务器套接字端口侦听客户端。默认是2020。
+*   _port_ BTrace代理的服务器套接字端口侦听客户端。默认是2020。
 
 
 *   _path_ is the classpath used for compiling BTrace program. Default is ".".
 
-* _path_用于编译BTrace程序的类路径中。默认是“。”。
+*   _path_用于编译BTrace程序的类路径中。默认是“。”。
 
 
 *   _args_ is command line arguments passed to BTrace program. BTrace program can access these using the built-in functions "$" and "$length". 
 
-* _args_命令行参数传递给BTrace程序。BTrace程序可以使用内置函数访问这些“美元”和“长度”美元。
+*   _args_命令行参数传递给BTrace程序。BTrace程序可以使用内置函数访问这些“美元”和“长度”美元。
 
 
 ##  Pre-compiling BTrace scripts 
@@ -354,17 +356,17 @@ where
 
 *   _include-path_ is a set of include directories that are searched for header files. BTrace includes a simple preprocess with support for #define, #include and conditional compilation. It is **not** like a complete C/C++ preprocessor - but a useful subset. See the sample "ThreadBean.java". If -I is not specified, BTrace skips the preprocessor invocation step.
 
-* _include-path_是一组包括寻找头文件的目录。BTrace包含一个简单的预处理,支持# define,# include和条件编译.这是* * * *不像一个完整的C / c++预处理器,但是一个有用的子集。看过样品“ThreadBean.java”。如果没有指定- i,BTrace跳过预处理程序调用步骤。
+*   _include-path_是一组包括寻找头文件的目录。BTrace包含一个简单的预处理,支持# define,# include和条件编译.这是* * * *不像一个完整的C / c++预处理器,但是一个有用的子集。看过样品“ThreadBean.java”。如果没有指定- i,BTrace跳过预处理程序调用步骤。
 
 
 *   _classpath_ is the classpath used for compiling BTrace program(s). Default is "."
 
-* _classpath_ classpath用于编译BTrace项目(s)。默认是“。”
+*   _classpath_ classpath用于编译BTrace项目(s)。默认是“。”
 
 
 *   _directory_ is the output directory where compiled .class files are stored. Default is ".". 
 
-* _directory_就是编译输出目录。类文件存储。默认是“。”。
+*   _directory_就是编译输出目录。类文件存储。默认是“。”。
 
 
 This script uses BTrace compiler class - rather than regular javac and therefore will validate your BTrace program at compile time [so that you can avoid BTrace verify error at runtime]. 
@@ -420,57 +422,57 @@ btracer < pre-compiled-btrace。班application-main-class > < application-args >
 
 *   **bootClassPath** - boot classpath to be used
 
-* * * * * bootClassPath——引导类路径
+*   * * * * bootClassPath——引导类路径
 
 
 *   **systemClassPath** - system classpath to be used
 
-* * * * * systemClassPath——使用系统类路径
+*   * * * * systemClassPath——使用系统类路径
 
 
 *   **debug** - turns on verbose debug messages (true/false)
 
-* * * * * turns调试版本verbose据电文(true /贵方调试版本)
+*   * * * * turns调试版本verbose据电文(true /贵方调试版本)
 
 
 *   **unsafe** - do not check for btrace restrictions violations (true/false)
 
-* * *不* *,不检查btrace限制违反(真/假)
+*   * *不* *,不检查btrace限制违反(真/假)
 
 
 *   **dumpClasses** - dump the transformed bytecode to files (true/false)
 
-* * * dumpClasses * *——把转换后的字节码文件(真/假)
+*   * * dumpClasses * *——把转换后的字节码文件(真/假)
 
 
 *   **dumpDir** - specifies the folder where the transformed classes will be dumped to
 
-* * * * * dumpDir——指定的文件夹将被转换类
+*   * * * * dumpDir——指定的文件夹将被转换类
 
 
 *   **stdout** - redirect the btrace output to stdout instead of writing it to an arbitrary file (true/false)
 
-* * * * * stdout,btrace的输出重定向到标准输出而不是写一个任意文件(真/假)
+*   * * * * stdout,btrace的输出重定向到标准输出而不是写一个任意文件(真/假)
 
 
 *   **probeDescPath** - the path to search for probe descriptor XMLs
 
-* * * * * probeDescPath——路径搜索调查描述符中使用xml
+*   * * * * probeDescPath——路径搜索调查描述符中使用xml
 
 
 *   **script** - the path to a script to be run at the agent startup
 
-* * - * * *脚本路径代理启动时要运行的脚本
+*   * - * * *脚本路径代理启动时要运行的脚本
 
 
 *   **scriptdir** - the path to a directory containing scripts to be run at the agent startup
 
-* * * * * scriptdir——路径的目录包含在代理启动脚本运行
+*   * * * * scriptdir——路径的目录包含在代理启动脚本运行
 
 
 *   **scriptOutputFile** - the path to a file the btrace agent will store its output
 
-* * * * * scriptOutputFile——一个文件的路径btrace代理将存储输出
+*   * * * * scriptOutputFile——一个文件的路径btrace代理将存储输出
 
 
 ###  Important system properties 
@@ -480,7 +482,7 @@ btracer < pre-compiled-btrace。班application-main-class > < application-args >
 
 *   **btrace.agentname** - use to distinguish the outputs of various btrace agents running on the same machine
 
-* * * btrace。agentname * *——用来区分各种btrace的输出代理运行在同一台机器上
+*   * * btrace。agentname * *——用来区分各种btrace的输出代理运行在同一台机器上
 
 
 ##  BTrace Annotations 
@@ -565,42 +567,42 @@ The exact meaning of the unannotated arguments depends on the **Location** used:
 
 *   **Kind.ENTRY, Kind.RETURN**- the probed method arguments
 
-* * *。条目,善良。返回* *——探测方法参数
+*   * *。条目,善良。返回* *——探测方法参数
 
 
 *   **Kind.THROW** - the thrown exception
 
-* * *。把* *——抛出异常
+*   * *。把* *——抛出异常
 
 
 *   **Kind.ARRAY_SET, Kind.ARRAY_GET** - the array index
 
-* * *。ARRAY_SET,善良。ARRAY_GET * *——数组索引
+*   * *。ARRAY_SET,善良。ARRAY_GET * *——数组索引
 
 
 *   **Kind.CATCH** - the caught exception
 
-* * *。抓* *——捕获异常
+*   * *。抓* *——捕获异常
 
 
 *   **Kind.FIELD_SET** - the field value
 
-* * *。FIELD_SET * *——字段值
+*   * *。FIELD_SET * *——字段值
 
 
 *   **Kind.LINE** - the line number
 
-* * *。* *行——行号
+*   * *。* *行——行号
 
 
 *   **Kind.NEW** - the class name
 
-* * *。新* *——类名
+*   * *。新* *——类名
 
 
 *   **Kind.ERROR** - the thrown exception 
 
-* * *。错误* *——抛出异常
+*   * *。错误* *——抛出异常
 
 
 ###  Field Annotations 
@@ -652,12 +654,12 @@ Solaris DTrace动态、安全跟踪Solaris系统程序,内核和用户程序.因
 
 *   BTrace program can raise a DTrace probe - by calling dtraceProbe -- see BTraceUtils javadoc referred above. For this feature to work, you need to be running on **Solaris 10 or beyond**. For other platforms (Solaris 9 or below or any other OS), dtraceProbe() will be a no-op.
 
-* BTrace程序可以提高DTrace探测,通过调用dtraceProbe——看到BTraceUtils javadoc上面提到。对于这个功能,您需要运行在Solaris 10 * *或* *之外.为其他平台(Solaris 9或低于或任何其他操作系统),dtraceProbe()将是一个空操作。
+*   BTrace程序可以提高DTrace探测,通过调用dtraceProbe——看到BTraceUtils javadoc上面提到。对于这个功能,您需要运行在Solaris 10 * *或* *之外.为其他平台(Solaris 9或低于或任何其他操作系统),dtraceProbe()将是一个空操作。
 
 
 *   BTrace program can associate a D-script with it-- by @DTrace annotation (if the D-script is a simple one liner) or by @DTraceRef if the D-script is longer and hence stored outside of the BTrace program. See DTrace integration samples in the BTrace samples section below. This feature works using the . For this DTrace feature to work (o.e., being able to run associated D-script), you need to be running on **Solaris 11 build 35 or beyond**. You may want to check whether you have **/usr/share/lib/java/dtrace.jar** on your machine or not. @DTrace and @DTraceRef annotations are ignored on other platforms (Solaris 10 or below or any other OS). 
 
-* BTrace程序可以与它关联d脚本,由@DTrace注释(如果d脚本是一个简单的一个班轮)或@DTraceRef如果d脚本的时间更长,因此存储BTrace之外的 程序。见下面的DTrace集成在BTrace样品部分样品。该特性使用工作。对于这个工作(o.e DTrace特性.,能够运行相关的d脚本),您需要运行在Solaris 11构建35岁或超过* * * *。您可能需要检查一下你是否已经* * / usr / share / lib / java / dtrace。jar * *在您的机器上.@DTrace和@DTraceRef注释忽略其他平台上的Solaris 10(或低于或任何其他操作系统)。
+*   BTrace程序可以与它关联d脚本,由@DTrace注释(如果d脚本是一个简单的一个班轮)或@DTraceRef如果d脚本的时间更长,因此存储BTrace之外的 程序。见下面的DTrace集成在BTrace样品部分样品。该特性使用工作。对于这个工作(o.e DTrace特性.,能够运行相关的d脚本),您需要运行在Solaris 11构建35岁或超过* * * *。您可能需要检查一下你是否已经* * / usr / share / lib / java / dtrace。jar * *在您的机器上.@DTrace和@DTraceRef注释忽略其他平台上的Solaris 10(或低于或任何其他操作系统)。
 
 
 ##  BTrace Samples 
