@@ -85,77 +85,77 @@ methods that are annotated with [BTrace annotations](#btrace_anno). The annotati
 
 To guarantee that the tracing actions are "read-only" (i.e., the trace actions don't change the state of the program traced) and bounded (i.e., trace actions terminate in bounded time), a BTrace program is allowed to do only a restricted set of actions. In particular, a BTrace class
 
-保证跟踪行动(即“只读”。,跟踪行动不改变程序状态的追踪)和有界(即.在有限的时间内,跟踪行动终止),BTrace程序只允许做一套限制的行为。特别是,一个BTrace类
+为了保证跟踪行为是 “只读” 的。(即跟踪行为不能改变被跟踪程序的状态)和边界(即.在限定的时间内,跟踪行为执行完毕), BTrace程序只允许执行一系列严格限制的操作。BTrace类具有如下限制:
+
+
 
 
 *   can **not** create new objects.
 
-*   * *不* *可以创建新对象。
+*   不能创建新对象。
 
 
 *   can **not** create new arrays.
 
-*   * *不* *创建新的数组。
+*   不能创建新数组。
 
 
 *   can **not** throw exceptions.
 
-*   * *不* *抛出异常。
+*   不能抛出异常。
 
 
 *   can **not** catch exceptions.
-
-*   * * * * can七列有例外情况。
+*   不能捕获异常
 
 
 *   can **not** make arbitrary instance or static method calls - only the public static methods of com.sun.btrace.BTraceUtils class  or methods declared in the same program may be called from a BTrace program.
 
-*   * *不* *可以任意实例或静态方法调用,只有com.sun.btrace公共静态方法.BTraceUtils同一个程序中声明的类或方法可能从BTrace程序调用。
+*   不能调用任何实例方法或静态方法,只有 `com.sun.btrace.BTraceUtils` 类的 ` public static` 方法和BTrace 程序定义的方法可以调用。
 
 
 *   **(pre 1.2)** can **not** have instance fields and methods. Only static public void returning methods are allowed for a BTrace class. And all fields have to be static.
 
-*   * *(1.2前)* * * *不* *可以有实例字段和方法。只允许静态公共void返回方法的BTrace类。和所有字段必须是静态的。
+*   **(1.2版本之前)** 不能含有实例域和实例方法。BTrace类中只允许静态的 public void 返回方法。而且所有的字段都必须是静态的。
 
 
 *   can **not** assign to static or instance fields of target program's classes and objects. But, BTrace class can assign to it's own static fields ("trace state" can be mutated).
 
-*   * *不* *分配目标程序静态或实例字段的类和对象。但是,BTrace类可以分配给它的静态字段(“跟踪状态”可以突变)。
+*   不能赋值给目标程序的静态域或者实例域(instance field)。但是, BTrace 类可以赋值给自身的静态域(static fields, “跟踪状态”是可以修改的)。
 
 
 *   can **not** have outer, inner, nested or local classes.
 
-*   * *不* *外,内在的、嵌套的或当地的类。
+*   不能含有 外部类,内部类,嵌套类或局部类(outer, inner, nested or local classes)。
 
 
 *   can **not** have synchronized blocks or synchronized methods.
 
-*   * *不* * synchronized块或同步方法。
+*   不能含有同步块或同步方法(synchronized blocks or synchronized methods)。
 
 
 *   can **not** have loops (for, while, do..while)
 
-*   * *不* *可以循环(虽然,做. .)
+*   不能使用循环(for, while, do..while)
 
 
 *   can **not** extend arbitrary class (super class has to be java.lang.Object)
 
-*   * *不* *扩展任意类(超类是java . lang . object)
+*   不能继承任何一个类(父类必须是 `java.lang.Object` )
 
 
 *   can **not** implement interfaces.
 
-*   * * * * can非为接口。
+*   不能实现接口。
 
 
 *   can **not** contains assert statements.
 
-*   * *不* *包含断言语句。
+*   不能使用断言语句(assert)。
 
 
 *   can **not** use class literals. 
-
-*   * *不* *可以使用类的文字。
+*   不能使用类名称字面常量(class literals)。
 
 
 These restrictions could be circumvented by running BTrace in *unsafe* mode. Both the tracing script and the engine must be set up to require *unsafe* mode. The script must be annotated by *@BTrace(unsafe = true)* annotation and the engine must be started in *unsafe* mode. 
