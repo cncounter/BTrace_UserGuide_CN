@@ -63,19 +63,12 @@ BTrace跟踪代码需要放在 class 的一个静态方法(static method)中, �
 
 
 
-
-
-
-
-
-##  BTrace Program Structure 
-
 ##  BTrace程序结构
 
 
 A BTrace program is a plain Java class that has one or more 
 
-BTrace程序是一个普通的Java类,有一个或多个
+BTrace程序是一个普通的Java类, 其中有一到多个静态方法:
 
 
 ```
@@ -83,12 +76,11 @@ public static void
 ```
 methods that are annotated with [BTrace annotations](#btrace_anno). The annotations are used to specify traced program "locations" (also known as "probe points"). The tracing actions are specified inside the static method bodies. These static methods are referred as "action" methods. 
 
-长度超标,拒绝翻译!
+静态方法的返回值类型为 `void` . 同时需要有 [BTrace 注解]()。注解用于指定跟踪程序的“位置”(也称为“探测点”)。跟踪代码就是静态方法的 body。这些静态方法称为“处理”方法。
 
 
-##  BTrace Restrictions 
 
-##  BTrace的限制
+##  BTrace的限制(Restrictions)
 
 
 To guarantee that the tracing actions are "read-only" (i.e., the trace actions don't change the state of the program traced) and bounded (i.e., trace actions terminate in bounded time), a BTrace program is allowed to do only a restricted set of actions. In particular, a BTrace class
