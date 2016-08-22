@@ -168,63 +168,86 @@ These restrictions could be circumvented by running BTrace in *unsafe* mode. Bot
 ##  一个简单的BTrace程序(1.2)
 
 
-```
-// import all BTrace annotations
-import com.sun.btrace.annotations.*;
-// import statics from BTraceUtils class
-import static com.sun.btrace.BTraceUtils.*;
 
-' ' '
-/ /导入所有BTrace注释
-进口com.sun.btrace.annotations。*;
-/ /从BTraceUtils进口静力学类
-进口静态com.sun.btrace.BTraceUtils。*;
-
-
-// @BTrace annotation tells that this is a BTrace program
-@BTrace
-class HelloWorld {
-
-/ / @BTrace注释告诉这是一个BTrace程序
-@BTrace
-HelloWorld类{
-
-
-    // @OnMethod annotation tells where to probe.
-    // In this example, we are interested in entry 
-    // into the Thread.start() method. 
-    @OnMethod(
-        clazz="java.lang.Thread",
-        method="start"
-    )
-    void func() {
-        sharedMethod(msg);
-    }
+	// 引入所有 BTrace 相关的注解
+	import com.sun.btrace.annotations.*;
+	// 静态引入 BTraceUtils 类
+	import static com.sun.btrace.BTraceUtils.*;
+	 
+	// @BTrace 注解表明这是一个 BTrace 程序
+	@BTrace
+	class HelloWorld {
+	 
+		// @OnMethod 注解表示这是一个探测点(probe).
+		// 在此处, 我们关注的是 "进入 Thread.start()方法" 这个点.
+		@OnMethod(
+		clazz="java.lang.Thread",
+		method="start"
+		)
+		void func() {
+			sharedMethod("thread start");
+		}
+		 
+		void sharedMethod(String msg) {
+			// println 是 BTraceUtils 中定义的方法
+			println(msg);
+		}
+	}
 
 
 
 
-   void sharedMethod(String msg) {
-        // println is defined in BTraceUtils
-        println(msg);
-   }
-}
+##  A simple BTrace program (<1.2)
 
-空白sharedMethod(字符串味精){
-/ /定义println BTraceUtils
-println(味精);
-}
-}
+##  一个简单的 BTrace 程序(<1.2)
 
 
-```
 
-' ' '
+	// 引入所有 BTrace 相关的注解
+	import com.sun.btrace.annotations.*;
+	// 静态引入 BTraceUtils 类
+	import static com.sun.btrace.BTraceUtils.*;
+	 
+	// @BTrace 注解表明这是一个 BTrace 程序
+	@BTrace
+	public class HelloWorld {
+	 
+		// @OnMethod 注解表示这是一个探测点(probe).
+		// 在此处, 我们关注的是 "进入 Thread.start()方法" 这个点.
+		@OnMethod(
+		clazz="java.lang.Thread",
+		method="start"
+		)
+		public static void func() {
+			// println 是 BTraceUtils 中定义的方法
+			// 在1.2之前的版本中,只允许调用 BTraceUtils 类中的静态方法
+			println("about to start a thread!");
+		}
+	}
 
 
-##  A simple BTrace program ( Steps to run BTrace 
 
-##  在简单的BTrace program to run BTrace(步骤
+The above BTrace program can be run against a running Java process. This program will print "about to start a thread!" at the BTrace client whenever the target program is about to start a thread by Thread.start() method. There are other interesting probe points possible. For example, we can insert trace action at return from a method, exception return from a method, a field get or set within method(s), object/array creation, line number(s), throwing an exception. Please refer to the @OnMethod and other annotations for details.
+
+
+上述BTrace程序可以在已启动的Java进程上运行. 只有目标进程通过 Thread.start() 启动一个线程, 跟踪程序就在 BTrace 客户端打印出 "about to start a thread!" 。 当然,还有很多其他有趣的探测点. 例如, 我们可以针对这些操作插入跟踪动作,:
+
+- 从方法正常返回; 
+- 从方法异常返回; 
+- 方法中某个field 的取值和设值; 
+- 对象/数组的创建; 
+- 行号(line number); 
+- 抛出异常.
+
+详情请参考 [ @OnMethod and other annotations ](https://kenai.com/projects/btrace/pages/UserGuide#btrace_anno) 。
+
+
+
+
+
+
+
+## 执行 BTrace 的步骤
 
 
 1.  Find the process id of the target Java process that you want to trace. You can use jps tool to find the pid.
