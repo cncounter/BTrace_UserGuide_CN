@@ -252,25 +252,24 @@ The above BTrace program can be run against a running Java process. This program
 
 1.  Find the process id of the target Java process that you want to trace. You can use jps tool to find the pid.
 
-2.  找到目标Java进程的进程id,您想要跟踪。您可以使用jps工具找到pid。
+1.  找到想要跟踪的目标Java进程的 pid, 例如通过 `jps` 工具来查找 pid。
 
 
 
-1.  Write a BTrace program - you may want to start modifying one of the samples.
+2.  Write a BTrace program - you may want to start modifying one of the samples.
 
-2.  写一个BTrace程序,你可能想要开始修改的一个样本。
+2.  编写 BTrace 程序, 一般是找个样例程序,根据需要进行修改。
 
 
 
-1.  Run btrace tool by the following command line: 
+3.  Run btrace tool by the following command line: 
+
+3. 通过命令行执行运行btrace工具, 格式如下:
+
 ```
     btrace <pid> <btrace-script>
 ```
 
-3所示。通过下面的命令行运行btrace工具:
-' ' '
-btrace < pid > < btrace-script >
-' ' '
 
 
 ##  BTrace Command Line 
