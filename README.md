@@ -279,64 +279,61 @@ The above BTrace program can be run against a running Java process. This program
 
 BTrace is run using the command line tool btrace as shown below:
 
-BTrace运行使用命令行工具BTrace如下所示:
+运行 BTrace 的命令行脚本格式及参数如下所示:
 
 
 ```
 btrace [-I <include-path>] [-p <port>] [-cp <classpath>] <pid> <btrace-script> [<args>]
 ```
 
-! ! ! ! ! ! !
-btrace[㈠][-p include-path > < <港口>][-cp < < classpath >][btrace-script >室内滞留喷洒> < < args >]
-! ! ! ! ! ! !
 
 
 where
 
-在哪里
+其中
 
 
-*   _include-path_ is a set of include directories that are searched for header files. BTrace includes a simple preprocess with support for #define, #include and conditional compilation. It is **not** like a complete C/C++ preprocessor - but a useful subset. See the sample "ThreadBean.java". If -I is not specified, BTrace skips the preprocessor invocation step.
+*   `include-path` is a set of include directories that are searched for header files. BTrace includes a simple preprocess with support for #define, #include and conditional compilation. It is **not** like a complete C/C++ preprocessor - but a useful subset. See the sample "ThreadBean.java". If -I is not specified, BTrace skips the preprocessor invocation step.
 
-*   _include-path_是一组包括寻找头文件的目录。BTrace包含一个简单的预处理,支持# define,# include和条件编译.这是* * * *不像一个完整的C / c++预处理器,但是一个有用的子集。看过样品“ThreadBean.java”。如果没有指定- i,BTrace跳过预处理程序调用步骤。
+*   _include-path_ 是一组包括寻找头文件的目录。BTrace包含一个简单的预处理,支持# define,# include和条件编译.这是* * * *不像一个完整的C / c++预处理器,但是一个有用的子集。看过样品“ThreadBean.java”。如果没有指定- i,BTrace跳过预处理程序调用步骤。
 
 
-*   _port_ is the port in which BTrace agent listens. This is optional argument.
+*   `port` is the port in which BTrace agent listens. This is optional argument.
 
 *   _port_ BTrace代理侦听的端口。这是可选的参数。
 
 
-*   _classpath_ is set of directories, jar files where BTrace searches for classes during compilation. Default is ".".
+*   `classpath` is set of directories, jar files where BTrace searches for classes during compilation. Default is ".".
 
 *   _classpath_设置的目录,在编译jar文件在BTrace搜索类。默认是“。”。
 
 
-*   _pid_ is the process id of the traced Java program
+*   `pid` is the process id of the traced Java program
 
 *   _pid_跟踪Java程序的进程id
 
 
-*   _btrace-script_ is the trace program. If it is a ".java", then it is compiled before submission. Or else, it is assumed to be pre-compiled [i.e., it has to be a .class] and submitted. 
+*   `btrace-script` is the trace program. If it is a ".java", then it is compiled before submission. Or else, it is assumed to be pre-compiled [i.e., it has to be a .class] and submitted. 
 
 *   _btrace-script_跟踪程序。如果它是一个”。java”,那么编译之前提交。否则,它被认为是预编译(即。,它必须是一个。类)和提交。
 
 
 ###  optional 
 
-###  可选
+###  可选参数
 
 
-*   _port_ is the server socket port at which BTrace agent listens for clients. Default is 2020.
+*   `port` is the server socket port at which BTrace agent listens for clients. Default is 2020.
 
 *   _port_ BTrace代理的服务器套接字端口侦听客户端。默认是2020。
 
 
-*   _path_ is the classpath used for compiling BTrace program. Default is ".".
+*   `path` is the classpath used for compiling BTrace program. Default is ".".
 
 *   _path_用于编译BTrace程序的类路径中。默认是“。”。
 
 
-*   _args_ is command line arguments passed to BTrace program. BTrace program can access these using the built-in functions "$" and "$length". 
+*   `args` is command line arguments passed to BTrace program. BTrace program can access these using the built-in functions "$" and "$length". 
 
 *   _args_命令行参数传递给BTrace程序。BTrace程序可以使用内置函数访问这些“美元”和“长度”美元。
 
@@ -348,39 +345,32 @@ where
 
 It is possible to precompile BTrace program using btracec script. btracec is a javac-like program that takes a BTrace program and produces a .class file.
 
-可以预编译BTrace程序使用btracec脚本。btracec javac-like程序,BTrace程序并生成。类文件。
+可以使用`btracec`脚本对BTrace程序执行预编译。`btracec` 类似于  `javac`程序, 将 BTrace程序编译后生成 `.class` 文件。
 
 
 ```
 btracec [-I <include-path>] [-cp <classpath>] [-d <directory>] <one-or-more-BTrace-.java-files> 
-
-' ' '
-btracec[我<包括路径>][- cp <路径>][- d <目录>]< one-or-more-BTrace . java文件>
-
-
 ```
-
-' ' '
 
 
 where
 
-在哪里
+其中
 
 
-*   _include-path_ is a set of include directories that are searched for header files. BTrace includes a simple preprocess with support for #define, #include and conditional compilation. It is **not** like a complete C/C++ preprocessor - but a useful subset. See the sample "ThreadBean.java". If -I is not specified, BTrace skips the preprocessor invocation step.
+*   `include-path` is a set of include directories that are searched for header files. BTrace includes a simple preprocess with support for #define, #include and conditional compilation. It is **not** like a complete C/C++ preprocessor - but a useful subset. See the sample "ThreadBean.java". If -I is not specified, BTrace skips the preprocessor invocation step.
 
-*   _include-path_是一组包括寻找头文件的目录。BTrace包含一个简单的预处理,支持# define,# include和条件编译.这是* * * *不像一个完整的C / c++预处理器,但是一个有用的子集。看过样品“ThreadBean.java”。如果没有指定- i,BTrace跳过预处理程序调用步骤。
-
-
-*   _classpath_ is the classpath used for compiling BTrace program(s). Default is "."
-
-*   _classpath_ classpath用于编译BTrace项目(s)。默认是“。”
+*   `include-path`是一组包括寻找头文件的目录。BTrace包含一个简单的预处理,支持# define,# include和条件编译.这是* * * *不像一个完整的C / c++预处理器,但是一个有用的子集。看过样品“ThreadBean.java”。如果没有指定- i,BTrace跳过预处理程序调用步骤。
 
 
-*   _directory_ is the output directory where compiled .class files are stored. Default is ".". 
+*   `classpath` is the classpath used for compiling BTrace program(s). Default is "."
 
-*   _directory_就是编译输出目录。类文件存储。默认是“。”。
+*   `classpath` classpath用于编译BTrace项目(s)。默认是“。”
+
+
+*   `directory` is the output directory where compiled .class files are stored. Default is ".". 
+
+*   `directory`就是编译输出目录。类文件存储。默认是“。”。
 
 
 This script uses BTrace compiler class - rather than regular javac and therefore will validate your BTrace program at compile time [so that you can avoid BTrace verify error at runtime]. 
